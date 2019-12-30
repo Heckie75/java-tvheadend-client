@@ -4,26 +4,63 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class AutoRecEntry extends AbstractRecEntry {
 
+  public final static String ANY = "Any";
+
   private String tag;
   private String start_window;
   private String cat1;
   private String cat2;
   private String cat3;
-  private boolean fulltext;
-  private int btype;
-  private int content_type;
-  private int minyear;
-  private int maxyear;
-  private int minseason;
-  private int maxseason;
-  private int star_rating;
-  private int maxcount;
-  private long record;
-  private long maxsched;
-  private long start_extra;
-  private long stop_extra;
-  private long minduration;
-  private long maxduration;
+  private Boolean fulltext;
+  private Integer btype;
+  private Integer content_type;
+  private Integer minyear;
+  private Integer maxyear;
+  private Integer minseason;
+  private Integer maxseason;
+  private Integer star_rating;
+  private Integer maxcount;
+  private Long record;
+  private Integer maxsched;
+  private Long start_extra;
+  private Long stop_extra;
+  private Long minduration;
+  private Long maxduration;
+
+  public AutoRecEntry() {
+
+  }
+
+  public AutoRecEntry(String name, String title, boolean fulltext, String channel, String start, String start_window,
+      int[] weekdays, String comment, long record, String tag, int btype, int content_type, String config_name, int pri,
+      String cat1, String cat2, String cat3, long minduration, long maxduration, int minyear, int maxyear, int minseason,
+      int maxseason, int star_rating, String directory) {
+    this.name = name;
+    this.title = title;
+    this.fulltext = Boolean.valueOf(fulltext);
+    this.channel = channel;
+    this.start = start;
+    this.start_window = start_window;
+    this.weekdays = weekdays;
+    this.comment = comment;
+    this.record = Long.valueOf(record);
+    this.tag = tag;
+    this.btype = Integer.valueOf(btype);
+    this.content_type = Integer.valueOf(content_type);
+    this.config_name = config_name;
+    this.pri = Integer.valueOf(pri);
+    this.cat1 = cat1;
+    this.cat2 = cat2;
+    this.cat3 = cat3;
+    this.minduration = Long.valueOf(minduration);
+    this.maxduration = Long.valueOf(maxduration);
+    this.minyear = Integer.valueOf(minyear);
+    this.maxyear = Integer.valueOf(maxyear);
+    this.minseason = Integer.valueOf(minseason);
+    this.maxseason = Integer.valueOf(maxseason);
+    this.star_rating = Integer.valueOf(star_rating);
+    this.directory = directory;
+  }
 
   public String getTag() {
     return tag;
@@ -41,123 +78,123 @@ public class AutoRecEntry extends AbstractRecEntry {
     this.start_window = start_window;
   }
 
-  public boolean isFulltext() {
+  public Boolean isFulltext() {
     return fulltext;
   }
 
-  public void setFulltext(boolean fulltext) {
+  public void setFulltext(Boolean fulltext) {
     this.fulltext = fulltext;
   }
 
-  public int getBtype() {
+  public Integer getBtype() {
     return btype;
   }
 
-  public void setBtype(int btype) {
+  public void setBtype(Integer btype) {
     this.btype = btype;
   }
 
-  public int getContent_type() {
+  public Integer getContent_type() {
     return content_type;
   }
 
-  public void setContent_type(int content_type) {
+  public void setContent_type(Integer content_type) {
     this.content_type = content_type;
   }
 
-  public int getMinyear() {
+  public Integer getMinyear() {
     return minyear;
   }
 
-  public void setMinyear(int minyear) {
+  public void setMinyear(Integer minyear) {
     this.minyear = minyear;
   }
 
-  public int getMaxyear() {
+  public Integer getMaxyear() {
     return maxyear;
   }
 
-  public void setMaxyear(int maxyear) {
+  public void setMaxyear(Integer maxyear) {
     this.maxyear = maxyear;
   }
 
-  public int getMinseason() {
+  public Integer getMinseason() {
     return minseason;
   }
 
-  public void setMinseason(int minseason) {
+  public void setMinseason(Integer minseason) {
     this.minseason = minseason;
   }
 
-  public int getMaxseason() {
+  public Integer getMaxseason() {
     return maxseason;
   }
 
-  public void setMaxseason(int maxseason) {
+  public void setMaxseason(Integer maxseason) {
     this.maxseason = maxseason;
   }
 
-  public int getStar_rating() {
+  public Integer getStar_rating() {
     return star_rating;
   }
 
-  public void setStar_rating(int star_rating) {
+  public void setStar_rating(Integer star_rating) {
     this.star_rating = star_rating;
   }
 
-  public int getMaxcount() {
+  public Integer getMaxcount() {
     return maxcount;
   }
 
-  public void setMaxcount(int maxcount) {
+  public void setMaxcount(Integer maxcount) {
     this.maxcount = maxcount;
   }
 
-  public long getRecord() {
+  public Long getRecord() {
     return record;
   }
 
-  public void setRecord(long record) {
+  public void setRecord(Long record) {
     this.record = record;
   }
 
-  public long getMaxsched() {
+  public Integer getMaxsched() {
     return maxsched;
   }
 
-  public void setMaxsched(long maxsched) {
+  public void setMaxsched(Integer maxsched) {
     this.maxsched = maxsched;
   }
 
-  public long getStart_extra() {
+  public Long getStart_extra() {
     return start_extra;
   }
 
-  public void setStart_extra(long start_extra) {
+  public void setStart_extra(Long start_extra) {
     this.start_extra = start_extra;
   }
 
-  public long getStop_extra() {
+  public Long getStop_extra() {
     return stop_extra;
   }
 
-  public void setStop_extra(long stop_extra) {
+  public void setStop_extra(Long stop_extra) {
     this.stop_extra = stop_extra;
   }
 
-  public long getMinduration() {
+  public Long getMinduration() {
     return minduration;
   }
 
-  public void setMinduration(long minduration) {
+  public void setMinduration(Long minduration) {
     this.minduration = minduration;
   }
 
-  public long getMaxduration() {
+  public Long getMaxduration() {
     return maxduration;
   }
 
-  public void setMaxduration(long maxduration) {
+  public void setMaxduration(Long maxduration) {
     this.maxduration = maxduration;
   }
 

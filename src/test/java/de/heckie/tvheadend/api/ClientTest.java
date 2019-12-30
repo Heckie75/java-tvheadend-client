@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +19,12 @@ import de.heckie.tvheadend.api.model.channel.ChannelGridRequestParameter;
 import de.heckie.tvheadend.api.model.channel.ChannelListRequestParameter;
 import de.heckie.tvheadend.api.model.channel.ChannelTagGrid;
 import de.heckie.tvheadend.api.model.channel.ChannelTagGridRequestParameter;
+import de.heckie.tvheadend.api.model.dvr.AutoRecEntry;
 import de.heckie.tvheadend.api.model.dvr.AutoRecEntryGrid;
+import de.heckie.tvheadend.api.model.dvr.DvrEntry;
 import de.heckie.tvheadend.api.model.dvr.DvrEntryGrid;
 import de.heckie.tvheadend.api.model.dvr.DvrEntryGridRequestParameter;
+import de.heckie.tvheadend.api.model.dvr.TimeRecEntry;
 import de.heckie.tvheadend.api.model.dvr.TimeRecEntryGrid;
 import de.heckie.tvheadend.api.model.epg.EventGrid;
 import de.heckie.tvheadend.api.model.epg.EventRequestParameter;
@@ -31,6 +36,10 @@ import de.heckie.tvheadend.api.model.status.SubscriptionGrid;
 class ClientTest {
 
   private static TvheadendClient client;
+
+  private static List<String> dvrEntriesToDelete = new ArrayList<>();
+  private static List<String> autorecsToDelete = new ArrayList<>();
+  private static List<String> timerecsToDelete = new ArrayList<>();
 
   @BeforeAll
   static void init() throws Exception {
@@ -200,14 +209,72 @@ class ClientTest {
 
   @Test
   void testCreateDvrEntryByEvent() throws Exception {
-    List<String> createDvrEntryByEvent = client.createDvrEntryByEvent(2098006, null);
+    List<String> createDvrEntryByEvent = client.createDvrEntryByEvent(2117160, null);
     assertFalse(createDvrEntryByEvent.isEmpty());
+    dvrEntriesToDelete.addAll(createDvrEntryByEvent);
   }
 
   @Test
   void testCreateDvrAutoRecByEvent() throws Exception {
-    List<String> createDvrEntryByEvent = client.createDvrAutoRecByEvent(2098006, null);
+    List<String> createDvrEntryByEvent = client.createDvrAutoRecByEvent(2117160, null);
     assertFalse(createDvrEntryByEvent.isEmpty());
+    autorecsToDelete.addAll(createDvrEntryByEvent);
+  }
+
+  @Test
+  void testCreateDvrEnty() throws Exception {
+    DvrEntry dvrEntry = new DvrEntry("Test", "MyExtra", "cc1284ab41974a866042e73210a39ff5", 1577748600, 1577750400, "MyComment",
+        1, 2, 6,
+        "bfa7ff074783192d19e552dc3983d239");
+    String createDvrEntry = client.createDvrEntry(dvrEntry);
+    assertFalse(createDvrEntry.isBlank());
+    dvrEntriesToDelete.add(createDvrEntry);
+  }
+
+  @Test
+  void testCreateTimeRecEnty() throws Exception {
+    TimeRecEntry timeRecEntry = new TimeRecEntry("TestTimeRec", "cc1284ab41974a866042e73210a39ff5", "20:00", "20:15",
+        new int[] { 1, 3 },
+        "MyComment", "MyTitle", "bfa7ff074783192d19e552dc3983d239", "");
+    String createTimeRecEntry = client.createTimeRecEntry(timeRecEntry);
+    assertFalse(createTimeRecEntry.isBlank());
+    timerecsToDelete.add(createTimeRecEntry);
+  }
+
+  @Test
+  void testCreateAutoRecEnty() throws Exception {
+    AutoRecEntry autoRecEntry = new AutoRecEntry("AutoRecTest", "ReqExp", true, "cc1284ab41974a866042e73210a39ff5",
+        AutoRecEntry.ANY, AutoRecEntry.ANY, new int[] { 1, 2 }, "MyComment", 0, "", 0, 0, "bfa7ff074783192d19e552dc3983d239", 6,
+        "", "", "", 0, 0, 0, 0, 0,
+        0, 0, "");
+
+    String createAutoRecEntry = client.createAutoRecEntry(autoRecEntry);
+    assertFalse(createAutoRecEntry.isBlank());
+    autorecsToDelete.add(createAutoRecEntry);
+  }
+
+  @Test
+  void testSaveTimeRecEntry() throws Exception {
+    // TODO
+  }
+
+  @Test
+  void testSaveAutoRecEntry() throws Exception {
+    // TODO
+  }
+
+  @Test
+  void testSaveDvrEntry() throws Exception {
+    // TODO
+  }
+
+  @AfterAll
+  static void cleanup() throws Exception {
+
+    client.deleteIdNode(dvrEntriesToDelete.toArray(new String[dvrEntriesToDelete.size()]));
+    client.deleteIdNode(autorecsToDelete.toArray(new String[autorecsToDelete.size()]));
+    client.deleteIdNode(timerecsToDelete.toArray(new String[timerecsToDelete.size()]));
+
   }
 
 }

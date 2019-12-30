@@ -7,16 +7,16 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 public class DvrEntry {
 
   private String uuid;
-  private boolean enabled;
-  private long create;
-  private int watched;
-  private long start;
-  private long start_extra;
-  private long start_real;
-  private long stop;
-  private long stop_extra;
-  private long stop_real;
-  private long duration;
+  private Boolean enabled;
+  private Long create;
+  private Integer watched;
+  private Long start;
+  private Long start_extra;
+  private Long start_real;
+  private Long stop;
+  private Long stop_extra;
+  private Long stop_real;
+  private Long duration;
   private String channel;
   private String channelname;
   private String image;
@@ -39,32 +39,49 @@ public class DvrEntry {
   private String url;
   private String status;
   private String sched_status;
-  private int pri;
-  private int retention;
-  private long removal;
-  private long playposition;
-  private int playcount;
-  private int errorcode;
-  private long errors;
-  private long data_errors;
-  private long dvb_eid;
-  private long fileremoved;
-  private int content_type;
-  private int copyright_year;
-  private long broadcast;
-  private long filesize;
-  private int duplicate;
-  private int first_aired;
-  private boolean noresched;
-  private boolean norerecord;
+  private Integer pri;
+  private Integer retention;
+  private Long removal;
+  private Long playposition;
+  private Integer playcount;
+  private Integer errorcode;
+  private Long errors;
+  private Long data_errors;
+  private Long dvb_eid;
+  private Long fileremoved;
+  private Integer content_type;
+  private Integer copyright_year;
+  private Long broadcast;
+  private Long filesize;
+  private Integer duplicate;
+  private Integer first_aired;
+  private Boolean noresched;
+  private Boolean norerecord;
   private Map<String, String> title;
   private Map<String, String> subtitle;
   private Map<String, String> description;
   private String[] keyword;
-  private int[] genre;
+  private Integer[] genre;
   private String comment;
-  private Object credits; // TODO
-  private Object[] category; // TODO
+  private Object credits;
+  private Object[] category;
+
+  public DvrEntry() {
+  }
+
+  public DvrEntry(String disp_title, String disp_extratext, String channel, long start, long stop, String comment,
+      long start_extra, long stop_extra, Integer pri, String config_name) {
+    this.disp_title = disp_title;
+    this.disp_extratext = disp_extratext;
+    this.channel = channel;
+    this.start = Long.valueOf(start);
+    this.stop = Long.valueOf(stop);
+    this.comment = comment;
+    this.start_extra = Long.valueOf(start_extra);
+    this.stop_extra = Long.valueOf(stop_extra);
+    this.pri = pri;
+    this.config_name = config_name;
+  }
 
   public String getUuid() {
     return uuid;
@@ -74,83 +91,83 @@ public class DvrEntry {
     this.uuid = uuid;
   }
 
-  public boolean isEnabled() {
+  public Boolean isEnabled() {
     return enabled;
   }
 
-  public void setEnabled(boolean enabled) {
+  public void setEnabled(Boolean enabled) {
     this.enabled = enabled;
   }
 
-  public long getCreate() {
+  public Long getCreate() {
     return create;
   }
 
-  public void setCreate(long create) {
+  public void setCreate(Long create) {
     this.create = create;
   }
 
-  public int getWatched() {
+  public Integer getWatched() {
     return watched;
   }
 
-  public void setWatched(int watched) {
+  public void setWatched(Integer watched) {
     this.watched = watched;
   }
 
-  public long getStart() {
+  public Long getStart() {
     return start;
   }
 
-  public void setStart(long start) {
+  public void setStart(Long start) {
     this.start = start;
   }
 
-  public long getStart_extra() {
+  public Long getStart_extra() {
     return start_extra;
   }
 
-  public void setStart_extra(long start_extra) {
+  public void setStart_extra(Long start_extra) {
     this.start_extra = start_extra;
   }
 
-  public long getStart_real() {
+  public Long getStart_real() {
     return start_real;
   }
 
-  public void setStart_real(long start_real) {
+  public void setStart_real(Long start_real) {
     this.start_real = start_real;
   }
 
-  public long getStop() {
+  public Long getStop() {
     return stop;
   }
 
-  public void setStop(long stop) {
+  public void setStop(Long stop) {
     this.stop = stop;
   }
 
-  public long getStop_extra() {
+  public Long getStop_extra() {
     return stop_extra;
   }
 
-  public void setStop_extra(long stop_extra) {
+  public void setStop_extra(Long stop_extra) {
     this.stop_extra = stop_extra;
   }
 
-  public long getStop_real() {
+  public Long getStop_real() {
     return stop_real;
   }
 
-  public void setStop_real(long stop_real) {
+  public void setStop_real(Long stop_real) {
     this.stop_real = stop_real;
   }
 
-  public long getDuration() {
+  public Long getDuration() {
     return duration;
   }
 
-  public void setDuration(long duration) {
+  public void setDuration(Long duration) {
     this.duration = duration;
   }
 
@@ -330,147 +347,147 @@ public class DvrEntry {
     this.sched_status = sched_status;
   }
 
-  public int getPri() {
+  public Integer getPri() {
     return pri;
   }
 
-  public void setPri(int pri) {
+  public void setPri(Integer pri) {
     this.pri = pri;
   }
 
-  public int getRetention() {
+  public Integer getRetention() {
     return retention;
   }
 
-  public void setRetention(int retention) {
+  public void setRetention(Integer retention) {
     this.retention = retention;
   }
 
-  public long getRemoval() {
+  public Long getRemoval() {
     return removal;
   }
 
-  public void setRemoval(long removal) {
+  public void setRemoval(Long removal) {
     this.removal = removal;
   }
 
-  public long getPlayposition() {
+  public Long getPlayposition() {
     return playposition;
   }
 
-  public void setPlayposition(long playposition) {
+  public void setPlayposition(Long playposition) {
     this.playposition = playposition;
   }
 
-  public int getPlaycount() {
+  public Integer getPlaycount() {
     return playcount;
   }
 
-  public void setPlaycount(int playcount) {
+  public void setPlaycount(Integer playcount) {
     this.playcount = playcount;
   }
 
-  public int getErrorcode() {
+  public Integer getErrorcode() {
     return errorcode;
   }
 
-  public void setErrorcode(int errorcode) {
+  public void setErrorcode(Integer errorcode) {
     this.errorcode = errorcode;
   }
 
-  public long getErrors() {
+  public Long getErrors() {
     return errors;
   }
 
-  public void setErrors(long errors) {
+  public void setErrors(Long errors) {
     this.errors = errors;
   }
 
-  public long getData_errors() {
+  public Long getData_errors() {
     return data_errors;
   }
 
-  public void setData_errors(long data_errors) {
+  public void setData_errors(Long data_errors) {
     this.data_errors = data_errors;
   }
 
-  public long getDvb_eid() {
+  public Long getDvb_eid() {
     return dvb_eid;
   }
 
-  public void setDvb_eid(long dvb_eid) {
+  public void setDvb_eid(Long dvb_eid) {
     this.dvb_eid = dvb_eid;
   }
 
-  public long getFileremoved() {
+  public Long getFileremoved() {
     return fileremoved;
   }
 
-  public void setFileremoved(long fileremoved) {
+  public void setFileremoved(Long fileremoved) {
     this.fileremoved = fileremoved;
   }
 
-  public int getContent_type() {
+  public Integer getContent_type() {
     return content_type;
   }
 
-  public void setContent_type(int content_type) {
+  public void setContent_type(Integer content_type) {
     this.content_type = content_type;
   }
 
-  public int getCopyright_year() {
+  public Integer getCopyright_year() {
     return copyright_year;
   }
 
-  public void setCopyright_year(int copyright_year) {
+  public void setCopyright_year(Integer copyright_year) {
     this.copyright_year = copyright_year;
   }
 
-  public long getBroadcast() {
+  public Long getBroadcast() {
     return broadcast;
   }
 
-  public void setBroadcast(long broadcast) {
+  public void setBroadcast(Long broadcast) {
     this.broadcast = broadcast;
   }
 
-  public long getFilesize() {
+  public Long getFilesize() {
     return filesize;
   }
 
-  public void setFilesize(long filesize) {
+  public void setFilesize(Long filesize) {
     this.filesize = filesize;
   }
 
-  public int getDuplicate() {
+  public Integer getDuplicate() {
     return duplicate;
   }
 
-  public void setDuplicate(int duplicate) {
+  public void setDuplicate(Integer duplicate) {
     this.duplicate = duplicate;
   }
 
-  public int getFirst_aired() {
+  public Integer getFirst_aired() {
     return first_aired;
   }
 
-  public void setFirst_aired(int first_aired) {
+  public void setFirst_aired(Integer first_aired) {
     this.first_aired = first_aired;
   }
 
-  public boolean isNoresched() {
+  public Boolean isNoresched() {
     return noresched;
   }
 
-  public void setNoresched(boolean noresched) {
+  public void setNoresched(Boolean noresched) {
     this.noresched = noresched;
   }
 
-  public boolean isNorerecord() {
+  public Boolean isNorerecord() {
     return norerecord;
   }
 
-  public void setNorerecord(boolean norerecord) {
+  public void setNorerecord(Boolean norerecord) {
     this.norerecord = norerecord;
   }
 
@@ -522,11 +539,11 @@ public class DvrEntry {
     this.keyword = keyword;
   }
 
-  public int[] getGenre() {
+  public Integer[] getGenre() {
     return genre;
   }
 
-  public void setGenre(int[] genre) {
+  public void setGenre(Integer[] genre) {
     this.genre = genre;
   }
 

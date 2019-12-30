@@ -4,20 +4,20 @@ import de.heckie.tvheadend.api.model.UuidEntity;
 
 public abstract class AbstractRecEntry extends UuidEntity {
 
-  private boolean enabled;
-  private String name;
-  private String title;
-  private String channel;
-  private String start;
-  private int[] weekdays;
-  private int pri;
-  private int retention;
-  private int removal; // ok
-  private String directory;
-  private String config_name;
-  private String owner;
-  private String creator;
-  private String comment;
+  Boolean enabled;
+  String name;
+  String title;
+  String channel;
+  String start;
+  int[] weekdays;
+  Integer pri;
+  Integer retention;
+  Integer removal; // ok
+  String directory;
+  String config_name;
+  String owner;
+  String creator;
+  String comment;
 
   public String getName() {
     return name;
@@ -67,35 +67,35 @@ public abstract class AbstractRecEntry extends UuidEntity {
     this.creator = creator;
   }
 
-  public boolean isEnabled() {
+  public Boolean isEnabled() {
     return enabled;
   }
 
-  public void setEnabled(boolean enabled) {
+  public void setEnabled(Boolean enabled) {
     this.enabled = enabled;
   }
 
-  public int getPri() {
+  public Integer getPri() {
     return pri;
   }
 
-  public void setPri(int pri) {
+  public void setPri(Integer pri) {
     this.pri = pri;
   }
 
-  public int getRetention() {
+  public Integer getRetention() {
     return retention;
   }
 
-  public void setRetention(int retention) {
+  public void setRetention(Integer retention) {
     this.retention = retention;
   }
 
-  public int getRemoval() {
+  public Integer getRemoval() {
     return removal;
   }
 
-  public void setRemoval(int removal) {
+  public void setRemoval(Integer removal) {
     this.removal = removal;
   }
 

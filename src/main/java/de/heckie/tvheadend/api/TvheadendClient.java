@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.heckie.tvheadend.api.model.AbstractParams;
 import de.heckie.tvheadend.api.model.KeyValList;
+import de.heckie.tvheadend.api.model.WrapParameter;
 import de.heckie.tvheadend.api.model.channel.BouquetGrid;
 import de.heckie.tvheadend.api.model.channel.BouquetGridRequestParameter;
 import de.heckie.tvheadend.api.model.channel.ChannelGrid;
@@ -39,10 +40,13 @@ import de.heckie.tvheadend.api.model.channel.ChannelGridRequestParameter;
 import de.heckie.tvheadend.api.model.channel.ChannelListRequestParameter;
 import de.heckie.tvheadend.api.model.channel.ChannelTagGrid;
 import de.heckie.tvheadend.api.model.channel.ChannelTagGridRequestParameter;
+import de.heckie.tvheadend.api.model.dvr.AutoRecEntry;
 import de.heckie.tvheadend.api.model.dvr.AutoRecEntryGrid;
+import de.heckie.tvheadend.api.model.dvr.DvrEntry;
 import de.heckie.tvheadend.api.model.dvr.DvrEntryByEventRequestParameter;
 import de.heckie.tvheadend.api.model.dvr.DvrEntryGrid;
 import de.heckie.tvheadend.api.model.dvr.DvrEntryGridRequestParameter;
+import de.heckie.tvheadend.api.model.dvr.TimeRecEntry;
 import de.heckie.tvheadend.api.model.dvr.TimeRecEntryGrid;
 import de.heckie.tvheadend.api.model.epg.EventGrid;
 import de.heckie.tvheadend.api.model.epg.EventRequestParameter;
@@ -63,19 +67,24 @@ public class TvheadendClient {
 
   private final static String API_CONFIG_CAPABILITIES = "/api/config/capabilities";
 
+  private final static String API_DVR_AUTOREC_CREATE = "/api/dvr/autorec/create";
   private final static String API_DVR_AUTOREC_GRID = "/api/dvr/autorec/grid";
+  private final static String API_DVR_ENTRY_CREATE = "/api/dvr/entry/create";
   private final static String API_DVR_ENTRY_CREATE_BY_EVENT = "/api/dvr/entry/create_by_event";
   private final static String API_DVR_AUTOREC_CREATE_BY_SERIES = "/api/dvr/autorec/create_by_series";
   private final static String API_DVR_ENTRY_GRID_FAILED = "/api/dvr/entry/grid_failed";
   private final static String API_DVR_ENTRY_GRID_FINISHED = "/api/dvr/entry/grid_finished";
   private final static String API_DVR_ENTRY_GRID_UPCOMING = "/api/dvr/entry/grid_upcoming";
   private final static String API_DVR_ENTRY_GRID_REMOVED = "/api/dvr/entry/grid_removed";
+  private final static String API_DVR_TIMEREC_CREATE = "/api/dvr/timerec/create";
   private final static String API_DVR_TIMEREC_GRID = "/api/dvr/timerec/grid";
 
   private final static String API_EPG_CONTENT_TYPE_LIST = "/api/epg/content_type/list";
   private final static String API_EPG_EVENTS_GRID = "/api/epg/events/grid";
 
+  private final static String API_IDNODE_DELETE = "/api/idnode/delete";
   private final static String API_IDNODE_LOAD = "/api/idnode/load";
+  private final static String API_IDNODE_SAVE = "/api/idnode/save";
 
   private final static String API_STATUS_INPUTS = "/api/status/inputs";
   private final static String API_STATUS_SUBSCRIPTIONS = "/api/status/subscriptions";
@@ -134,7 +143,7 @@ public class TvheadendClient {
 
       HttpPost post = new HttpPost(request);
       if (params != null) {
-        List<BasicNameValuePair> nameValuePair = params.toMap().entrySet().stream().filter(e -> !e.getValue().isEmpty())
+        List<BasicNameValuePair> nameValuePair = params.toMap().entrySet().stream().filter(e -> !e.getValue().isBlank())
             .map(e -> new BasicNameValuePair(e.getKey(), String.valueOf(e.getValue()))).collect(Collectors.toList());
         post.setEntity(new UrlEncodedFormEntity(nameValuePair));
       }
@@ -226,6 +235,12 @@ public class TvheadendClient {
     return createDvrEntryByEventOrSeries(API_DVR_AUTOREC_CREATE_BY_SERIES, eventId, configUuid);
   }
 
+  public String createDvrEntry(DvrEntry dvrEntry) throws IOException {
+    WrapParameter parameter = new WrapParameter("conf", dvrEntry);
+    Map<String, String> response = post(API_DVR_ENTRY_CREATE, parameter, Map.class);
+    return response.get("uuid");
+  }
+
   public DvrEntryGrid getUpcomingDvrEntryList(DvrEntryGridRequestParameter dvrEntryGridRequestParameter) throws IOException {
     if (dvrEntryGridRequestParameter == null) {
       dvrEntryGridRequestParameter = new DvrEntryGridRequestParameter();
@@ -254,8 +269,20 @@ public class TvheadendClient {
     return post(API_DVR_ENTRY_GRID_REMOVED, dvrEntryGridRequestParameter, DvrEntryGrid.class);
   }
 
+  public String createAutoRecEntry(AutoRecEntry autoRecEntry) throws IOException {
+    WrapParameter parameter = new WrapParameter("conf", autoRecEntry);
+    Map<String, String> response = post(API_DVR_AUTOREC_CREATE, parameter, Map.class);
+    return response.get("uuid");
+  }
+
   public AutoRecEntryGrid getAutoRecEntryList() throws IOException {
     return post(API_DVR_AUTOREC_GRID, null, AutoRecEntryGrid.class);
+  }
+
+  public String createTimeRecEntry(TimeRecEntry timeRecEntry) throws IOException {
+    WrapParameter parameter = new WrapParameter("conf", timeRecEntry);
+    Map<String, String> response = post(API_DVR_TIMEREC_CREATE, parameter, Map.class);
+    return response.get("uuid");
   }
 
   public TimeRecEntryGrid getTimeRecEntryList() throws IOException {
@@ -276,6 +303,26 @@ public class TvheadendClient {
 
   public KeyValList getIdNode(IdNodeRequestParameter idNodeRequestParameter) throws IOException {
     return post(API_IDNODE_LOAD, idNodeRequestParameter, KeyValList.class);
+  }
+
+  public void saveAutoRecEntry(AutoRecEntry autoRecEntry) throws IOException {
+    WrapParameter parameter = new WrapParameter("node", autoRecEntry);
+    post(API_IDNODE_SAVE, parameter, Object.class);
+  }
+
+  public void saveTimeRecEntry(TimeRecEntry timeRecEntry) throws IOException {
+    WrapParameter parameter = new WrapParameter("node", timeRecEntry);
+    post(API_IDNODE_SAVE, parameter, Object.class);
+  }
+
+  public void saveDvrEntry(DvrEntry dvrEntry) throws IOException {
+    WrapParameter parameter = new WrapParameter("node", dvrEntry);
+    post(API_IDNODE_SAVE, parameter, Object.class);
+  }
+
+  public void deleteIdNode(String[] uuidsOfSameEntity) throws IOException {
+    WrapParameter params = new WrapParameter("uuid", uuidsOfSameEntity);
+    post(API_IDNODE_DELETE, params, Object.class);
   }
 
 }
