@@ -1,0 +1,5 @@
+# 
+POST http://heckies-nuc:9981/api/channel/list HTTP/1.1
+Accept: application/json
+
+numbers=1&sources=0
