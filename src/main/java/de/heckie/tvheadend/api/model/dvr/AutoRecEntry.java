@@ -31,10 +31,12 @@ public class AutoRecEntry extends AbstractRecEntry {
 
   }
 
-  public AutoRecEntry(String name, String title, boolean fulltext, String channel, String start, String start_window,
-      int[] weekdays, String comment, long record, String tag, int btype, int content_type, String config_name, int pri,
-      String cat1, String cat2, String cat3, long minduration, long maxduration, int minyear, int maxyear, int minseason,
-      int maxseason, int star_rating, String directory) {
+  public AutoRecEntry(boolean enabled, String name, String title, boolean fulltext, String channel, String start,
+      String start_window, int[] weekdays, String comment, long start_extra, long stop_extra, long record, String tag, int btype,
+      int content_type, String config_name, String owner, String creator, int pri, long removal, String cat1, String cat2,
+      String cat3, long minduration, long maxduration, int minyear, int maxyear, int minseason, int maxseason, int star_rating,
+      String directory, int retention, int maxcount, int maxsched, String uuid) {
+    this.enabled = Boolean.valueOf(enabled);
     this.name = name;
     this.title = title;
     this.fulltext = Boolean.valueOf(fulltext);
@@ -43,12 +45,17 @@ public class AutoRecEntry extends AbstractRecEntry {
     this.start_window = start_window;
     this.weekdays = weekdays;
     this.comment = comment;
+    this.start_extra = Long.valueOf(start_extra);
+    this.stop_extra = Long.valueOf(stop_extra);
     this.record = Long.valueOf(record);
     this.tag = tag;
     this.btype = Integer.valueOf(btype);
     this.content_type = Integer.valueOf(content_type);
     this.config_name = config_name;
+    this.owner = owner;
+    this.creator = creator;
     this.pri = Integer.valueOf(pri);
+    this.removal = Long.valueOf(removal);
     this.cat1 = cat1;
     this.cat2 = cat2;
     this.cat3 = cat3;
@@ -60,6 +67,50 @@ public class AutoRecEntry extends AbstractRecEntry {
     this.maxseason = Integer.valueOf(maxseason);
     this.star_rating = Integer.valueOf(star_rating);
     this.directory = directory;
+    this.retention = Integer.valueOf(retention);
+    this.maxcount = Integer.valueOf(maxcount);
+    this.maxsched = Integer.valueOf(maxsched);
+    this.uuid = uuid;
+  }
+
+  public static AutoRecEntry of(AutoRecEntry o) {
+    AutoRecEntry autoRecEntry = new AutoRecEntry();
+    autoRecEntry.enabled = o.enabled;
+    autoRecEntry.name = o.name;
+    autoRecEntry.title = o.title;
+    autoRecEntry.fulltext = o.fulltext;
+    autoRecEntry.channel = o.channel;
+    autoRecEntry.start = o.start;
+    autoRecEntry.start_window = o.start_window;
+    autoRecEntry.weekdays = o.weekdays;
+    autoRecEntry.comment = o.comment;
+    autoRecEntry.start_extra = o.start_extra;
+    autoRecEntry.stop_extra = o.stop_extra;
+    autoRecEntry.record = o.record;
+    autoRecEntry.tag = o.tag;
+    autoRecEntry.btype = o.btype;
+    autoRecEntry.content_type = o.content_type;
+    autoRecEntry.config_name = o.config_name;
+    autoRecEntry.owner = o.owner;
+    autoRecEntry.creator = o.creator;
+    autoRecEntry.pri = o.pri;
+    autoRecEntry.removal = o.removal;
+    autoRecEntry.cat1 = o.cat1;
+    autoRecEntry.cat2 = o.cat2;
+    autoRecEntry.cat3 = o.cat3;
+    autoRecEntry.minduration = o.minduration;
+    autoRecEntry.maxduration = o.maxduration;
+    autoRecEntry.minyear = o.minyear;
+    autoRecEntry.maxyear = o.maxyear;
+    autoRecEntry.minseason = o.minseason;
+    autoRecEntry.maxseason = o.maxseason;
+    autoRecEntry.star_rating = o.star_rating;
+    autoRecEntry.directory = o.directory;
+    autoRecEntry.retention = o.retention;
+    autoRecEntry.maxcount = o.maxcount;
+    autoRecEntry.maxsched = o.maxsched;
+    autoRecEntry.uuid = o.uuid;
+    return autoRecEntry;
   }
 
   public String getTag() {

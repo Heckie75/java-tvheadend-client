@@ -27,7 +27,7 @@ public class ChannelGrid {
   }
 
   public Channel getByUUID(String uuid) {
-    return entries.stream().filter(c -> c.getUuid() == uuid).findFirst().orElse(null);
+    return entries.stream().filter(c -> uuid.equals(c.getUuid())).findFirst().orElse(null);
   }
 
   @Override

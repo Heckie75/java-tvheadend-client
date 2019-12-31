@@ -26,6 +26,10 @@ public class AutoRecEntryGrid {
     this.entries = entries;
   }
 
+  public AutoRecEntry getAutoRecEntryByUuid(String uuid) {
+    return entries.stream().filter(a -> uuid.equals(a.getUuid())).findFirst().orElse(null);
+  }
+
   @Override
   public String toString() {
     return ReflectionToStringBuilder.toString(this);

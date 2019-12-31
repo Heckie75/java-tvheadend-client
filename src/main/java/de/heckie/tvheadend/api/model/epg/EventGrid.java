@@ -26,6 +26,10 @@ public class EventGrid {
     this.entries = entries;
   }
 
+  public Event getEventById(long eventId) {
+    return entries.stream().filter(e -> e.getEventId() == eventId).findFirst().orElse(null);
+  }
+
   @Override
   public String toString() {
     return ReflectionToStringBuilder.toString(this);

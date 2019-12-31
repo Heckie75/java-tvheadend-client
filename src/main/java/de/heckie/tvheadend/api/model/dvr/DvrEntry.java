@@ -28,6 +28,7 @@ public class DvrEntry {
   private String disp_extratext;
   private String config_name;
   private String creator;
+  private String owner;
   private String filename;
   private String autorec_caption;
   private String autorec;
@@ -69,18 +70,48 @@ public class DvrEntry {
   public DvrEntry() {
   }
 
-  public DvrEntry(String disp_title, String disp_extratext, String channel, long start, long stop, String comment,
-      long start_extra, long stop_extra, Integer pri, String config_name) {
+  public DvrEntry(boolean enabled, String disp_title, String disp_extratext, String channel, long start, long stop,
+      String comment, String episode_disp, long start_extra, long stop_extra, int pri, String config_name, String owner,
+      String creator, long removal, int retention, String uuid) {
+    this.enabled = Boolean.valueOf(enabled);
     this.disp_title = disp_title;
     this.disp_extratext = disp_extratext;
     this.channel = channel;
     this.start = Long.valueOf(start);
     this.stop = Long.valueOf(stop);
     this.comment = comment;
+    this.episode_disp = episode_disp;
     this.start_extra = Long.valueOf(start_extra);
     this.stop_extra = Long.valueOf(stop_extra);
-    this.pri = pri;
+    this.pri = Integer.valueOf(pri);
     this.config_name = config_name;
+    this.owner = owner;
+    this.creator = creator;
+    this.removal = Long.valueOf(removal);
+    this.retention = Integer.valueOf(retention);
+    this.uuid = uuid;
+  }
+
+  public static DvrEntry of(DvrEntry o) {
+    DvrEntry dvrEntry = new DvrEntry();
+    dvrEntry.enabled = o.enabled;
+    dvrEntry.disp_title = o.disp_title;
+    dvrEntry.disp_extratext = o.disp_extratext;
+    dvrEntry.channel = o.channel;
+    dvrEntry.start = o.start;
+    dvrEntry.stop = o.stop;
+    dvrEntry.comment = o.comment;
+    dvrEntry.episode_disp = o.episode_disp;
+    dvrEntry.start_extra = o.start_extra;
+    dvrEntry.stop_extra = o.stop_extra;
+    dvrEntry.pri = o.pri;
+    dvrEntry.config_name = o.config_name;
+    dvrEntry.owner = o.owner;
+    dvrEntry.creator = o.creator;
+    dvrEntry.removal = o.removal;
+    dvrEntry.retention = o.retention;
+    dvrEntry.uuid = o.uuid;
+    return dvrEntry;
   }
 
   public String getUuid() {
@@ -553,6 +584,26 @@ public class DvrEntry {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  public String getOwner() {
+    return owner;
+  }
+
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
+
+  public Boolean getEnabled() {
+    return enabled;
+  }
+
+  public Boolean getNoresched() {
+    return noresched;
+  }
+
+  public Boolean getNorerecord() {
+    return norerecord;
   }
 
   @Override

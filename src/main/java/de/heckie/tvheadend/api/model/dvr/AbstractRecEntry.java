@@ -12,7 +12,7 @@ public abstract class AbstractRecEntry extends UuidEntity {
   int[] weekdays;
   Integer pri;
   Integer retention;
-  Integer removal; // ok
+  Long removal;
   String directory;
   String config_name;
   String owner;
@@ -91,11 +91,11 @@ public abstract class AbstractRecEntry extends UuidEntity {
     this.retention = retention;
   }
 
-  public Integer getRemoval() {
+  public Long getRemoval() {
     return removal;
   }
 
-  public void setRemoval(Integer removal) {
+  public void setRemoval(Long removal) {
     this.removal = removal;
   }
 

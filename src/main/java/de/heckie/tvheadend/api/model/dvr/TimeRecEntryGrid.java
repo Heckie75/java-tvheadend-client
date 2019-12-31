@@ -26,6 +26,10 @@ public class TimeRecEntryGrid {
     this.entries = entries;
   }
 
+  public TimeRecEntry getTimeRecEntryByUuid(String uuid) {
+    return entries.stream().filter(e -> uuid.equals(e.getUuid())).findFirst().orElse(null);
+  }
+
   @Override
   public String toString() {
     return ReflectionToStringBuilder.toString(this);
