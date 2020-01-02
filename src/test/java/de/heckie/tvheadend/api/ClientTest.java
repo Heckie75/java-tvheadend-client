@@ -6,13 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import de.heckie.tvheadend.api.model.KeyVal;
 import de.heckie.tvheadend.api.model.KeyValList;
 import de.heckie.tvheadend.api.model.channel.BouquetGrid;
 import de.heckie.tvheadend.api.model.channel.ChannelGrid;
@@ -115,13 +118,13 @@ class ClientTest {
   void testGetChannelList() throws Exception {
     KeyValList channelList = client.getChannelList(false);
     assertFalse(channelList.getEntries().isEmpty());
-    assertTrue(channelList.getEntries().get(0).getVal().startsWith("1 "));
-    assertEquals("2 ZDF HD", channelList.getValByKey("9691967511cee40ea6b4e7d58e8199ec"));
+    assertTrue(channelList.getEntries().get(0).getVal().equals("Das Erste HD"));
+    assertEquals("ZDF HD", channelList.getValByKey("9691967511cee40ea6b4e7d58e8199ec"));
 
     channelList = client.getChannelList(false);
     assertFalse(channelList.getEntries().isEmpty());
-    assertTrue(channelList.getEntries().get(0).getVal().startsWith("1 "));
-    assertEquals("2 ZDF HD", channelList.getValByKey("9691967511cee40ea6b4e7d58e8199ec"));
+    assertTrue(channelList.getEntries().get(0).getVal().equals("Das Erste HD"));
+    assertEquals("ZDF HD", channelList.getValByKey("9691967511cee40ea6b4e7d58e8199ec"));
   }
 
   @Test
@@ -350,6 +353,25 @@ class ClientTest {
     allDvrEntries = client.getAllDvrEntries(true);
     entry = allDvrEntries.stream().filter(e -> e.getUuid().equals(uuid)).findFirst().orElse(null);
     assertEquals("testSaveDvrEntry", entry.getComment());
+  }
+
+  @Test
+  void testGetEventsWithFilter() throws Exception {
+    KeyVal channel = client.getChannelList(false).getByVal("Das Erste HD");
+
+    Calendar cal = Calendar.getInstance();
+    int y = cal.get(Calendar.YEAR);
+    int m = cal.get(Calendar.MONTH);
+    int d = cal.get(Calendar.DAY_OF_MONTH);
+    long from = new Date(y - 1900, m, d).getTime();
+
+    List<String> channels = List.of(channel.getKey());
+    List<Event> events = client.getEvents(false, channels, from, from + 86400000L);
+    events.stream().forEach(
+        e -> System.out.println(e.getChannelName()
+            + "\t" + new Date(e.getStart() * 1000)
+            + "\t" + new Date(e.getStop() * 1000)
+            + "\t" + e.getTitle()));
   }
 
   @AfterAll

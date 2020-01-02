@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class Event {
 
+  public final static long TIME_OFFSET = new Date(70, 0, 1, 0, 0, 0).getTime();
+
   private long eventId;
   private String channelUuid;
   private String channelNumber;

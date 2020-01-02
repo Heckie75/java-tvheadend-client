@@ -45,6 +45,7 @@ import de.heckie.tvheadend.api.model.dvr.DvrEntry;
 import de.heckie.tvheadend.api.model.dvr.DvrEntryGrid;
 import de.heckie.tvheadend.api.model.dvr.TimeRecEntry;
 import de.heckie.tvheadend.api.model.dvr.TimeRecEntryGrid;
+import de.heckie.tvheadend.api.model.epg.Event;
 import de.heckie.tvheadend.api.model.epg.EventGrid;
 import de.heckie.tvheadend.api.model.status.ConnectionGrid;
 import de.heckie.tvheadend.api.model.status.InputGrid;
@@ -198,6 +199,13 @@ public class TvheadendHttpClient {
     return postFreshOrFromCache(API_EPG_EVENTS_GRID, params, API_EPG_EVENTS_GRID, force, EventGrid.class);
   }
 
+  public List<Event> getEvents(boolean force, List<String> channelUuids, long from, long to) throws IOException {
+    return getEvents(force).getEntries().stream().filter(
+        e -> (channelUuids == null || channelUuids.contains(e.getChannelUuid())) && e.getStart() * 1000 >= from
+            && e.getStart() * 1000 < to)
+        .collect(Collectors.toList());
+  }
+
   public KeyValList getGenreTypes(boolean force) throws IOException {
     return postFreshOrFromCache(API_EPG_CONTENT_TYPE_LIST, null, API_EPG_CONTENT_TYPE_LIST, force, KeyValList.class);
   }
@@ -231,7 +239,7 @@ public class TvheadendHttpClient {
   public KeyValList getChannelList(boolean force) throws IOException {
     Map<String, String> params = Map.of(
         "all", "1",
-        "numbers", "1");
+        "numbers", "0");
     return postFreshOrFromCache(API_CHANNEL_LIST, params, API_CHANNEL_LIST, force, KeyValList.class);
   }
 
