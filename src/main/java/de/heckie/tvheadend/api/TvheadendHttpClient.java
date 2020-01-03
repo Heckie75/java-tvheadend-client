@@ -236,10 +236,10 @@ public class TvheadendHttpClient {
     return postFreshOrFromCache(API_CHANNEL_GRID, params, API_CHANNEL_GRID, force, ChannelGrid.class);
   }
 
-  public KeyValList getChannelList(boolean force) throws IOException {
+  public KeyValList getChannelList(boolean withNumbers, boolean force) throws IOException {
     Map<String, String> params = Map.of(
         "all", "1",
-        "numbers", "0");
+        "numbers", withNumbers ? "1" : "0");
     return postFreshOrFromCache(API_CHANNEL_LIST, params, API_CHANNEL_LIST, force, KeyValList.class);
   }
 

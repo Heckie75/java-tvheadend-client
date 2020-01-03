@@ -116,12 +116,12 @@ class ClientTest {
 
   @Test
   void testGetChannelList() throws Exception {
-    KeyValList channelList = client.getChannelList(false);
+    KeyValList channelList = client.getChannelList(false, false);
     assertFalse(channelList.getEntries().isEmpty());
     assertTrue(channelList.getEntries().get(0).getVal().equals("Das Erste HD"));
     assertEquals("ZDF HD", channelList.getValByKey("9691967511cee40ea6b4e7d58e8199ec"));
 
-    channelList = client.getChannelList(false);
+    channelList = client.getChannelList(false, false);
     assertFalse(channelList.getEntries().isEmpty());
     assertTrue(channelList.getEntries().get(0).getVal().equals("Das Erste HD"));
     assertEquals("ZDF HD", channelList.getValByKey("9691967511cee40ea6b4e7d58e8199ec"));
@@ -357,7 +357,7 @@ class ClientTest {
 
   @Test
   void testGetEventsWithFilter() throws Exception {
-    KeyVal channel = client.getChannelList(false).getByVal("Das Erste HD");
+    KeyVal channel = client.getChannelList(false, false).getByVal("Das Erste HD");
 
     Calendar cal = Calendar.getInstance();
     int y = cal.get(Calendar.YEAR);
