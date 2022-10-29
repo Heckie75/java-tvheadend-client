@@ -43,6 +43,7 @@ class ClientTest {
   @BeforeAll
   static void init() throws Exception {
     client = new TvheadendHttpClient("http://192.168.178.30:9981/", "tvheadendadmin", "tvheadendadmin");
+    // client = new TvheadendHttpClient("http://heckie72.my-wan.de:9981/", "kodi", "kodi2022");
   }
 
   @Test

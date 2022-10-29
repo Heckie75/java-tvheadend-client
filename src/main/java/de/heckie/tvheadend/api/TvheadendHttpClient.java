@@ -127,13 +127,13 @@ public class TvheadendHttpClient {
 
     Header challengeHeader = getAuthChallengeHeader(uri);
     if (challengeHeader != null) {
-    	DigestScheme digestAuth = new DigestScheme();
-    	digestAuth.processChallenge(challengeHeader);
-    	
-    	AuthCache authCache = new BasicAuthCache();
-    	authCache.put(target, digestAuth);
-    	
-    	localContext.setAuthCache(authCache);    	
+      DigestScheme digestAuth = new DigestScheme();
+      digestAuth.processChallenge(challengeHeader);
+
+      AuthCache authCache = new BasicAuthCache();
+      authCache.put(target, digestAuth);
+
+      localContext.setAuthCache(authCache);
     }
   }
 
@@ -141,9 +141,9 @@ public class TvheadendHttpClient {
     try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
       CloseableHttpResponse response = httpClient.execute(new HttpGet(uri));
       Header challengeHeader = response.getFirstHeader("WWW-Authenticate");
-//      if (challengeHeader == null) {
-//        throw new IOException("Could not connect and get WWW-Authenticate header from given URI.");
-//      }
+      // if (challengeHeader == null) {
+      // throw new IOException("Could not connect and get WWW-Authenticate header from given URI.");
+      // }
       return challengeHeader;
     } catch (IOException e) {
       throw e;
